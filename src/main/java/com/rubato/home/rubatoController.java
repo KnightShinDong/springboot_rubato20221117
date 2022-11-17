@@ -34,5 +34,10 @@ public class rubatoController {
 		
 		return "index";
 	}
+	@RequestMapping(value = "member_join")
+	public String member_join() {
+		
+		return "member_join";
+	}
 	
 }

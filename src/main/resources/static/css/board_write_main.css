@@ -49,3 +49,9 @@ section#main #buttons {
     margin:10px 10px 0 0;
     text-align:right;
 }
+
+section#main #joim input {
+    width:200px;
+    height:16px;
+    border:solid 1px #808080;
+}
