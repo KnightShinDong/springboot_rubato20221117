@@ -3,6 +3,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<% 
+		String sessionId = (String)session.getAttribute("memberId");
+		String sessionName= (String)session.getAttribute("memberName");
+		//로그인 중이라면 로그인한 아이디가 저장되고 비로그인 중이면 sessionId==null 임
+		//세션 아이디 가져오기
+	%>
     <meta charset="UTF-8">
     <title>클래식기타 커뮤니티</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/common.css">
@@ -17,7 +23,19 @@
     <header> <!-- header 시작 -->
       <a href="index"><img id="logo" src="${pageContext.request.contextPath}/resources/img/logo.png"></a>
       <nav id="top_menu">
-        HOME | LOGIN | JOIN | NOTICE
+        HOME | 
+        <% if(sessionId == null) {
+        %>
+        LOGIN 
+        <% 
+        }else {
+        %>
+        <a href="logOut">LOGOUT</a> 
+        <% 
+        }
+        %>
+        
+        | <a href ="member_join">JOIN</a> | NOTICE
       </nav>
       <nav id="main_menu">
         <ul>
@@ -32,18 +50,36 @@
     <aside>
       <article id="login_box"> <!-- login box 시작 -->
         <img id="login_title" src="${pageContext.request.contextPath}/resources/img/ttl_login.png">
+        
+        <% if(sessionId == null){
+        %>
+         <form action="loginOk">
         <div id="input_button">
           <ul id="login_input">
-            <li><input type="text"></li>
-            <li><input type="password"></li>
+            <li><input type="text" name="mid"></li>
+            <li><input type="password" name="mpw"></li>
           </ul>
-          <img id="login_btn" src="${pageContext.request.contextPath}/resources/img/btn_login.gif">
+          <input type="image" id="login_btn" src="${pageContext.request.contextPath}/resources/img/btn_login.gif">
         </div>
+        </form>
+        <%
+        } else {
+       %>
+       <br><br><h2 align="center"><%= sessionId  %> 님 왜왔어여?</h2><br>
+		      
+       <% 
+        }
+       %>
+       
         <div class="clear"></div>
+         <% if(sessionId == null){ %>
         <div id="join_search">
-          <img src="${pageContext.request.contextPath}/resources/img/btn_join.gif">
+          <a href="member_join"><img src="${pageContext.request.contextPath}/resources/img/btn_join.gif"></a>
           <img src="${pageContext.request.contextPath}/resources/img/btn_search.gif">
         </div>
+        <% }else{ %>
+        <a href="logOut"><h3 align="right">로그아웃</h3></a>
+        <%} %>
       </article> <!-- login box 끝 -->
       <nav id="sub_menu"> <!-- 서브 메뉴 시작 -->
         <ul>
@@ -67,28 +103,31 @@
         <img src="${pageContext.request.contextPath}/resources/img/comm.gif">
         <h2 id="board_title">자유게시판</h2>
         <div id="write_title"><h2>글쓰기</h2></div>
+        <form action="writeOk">
+        <input type="hidden" name="rfbid" value="<%=sessionId%>">
         <table>
           <tr id="name">
             <td class="col1">이름</td>
-            <td class="col2"><input type="text"></td>
+            <td class="col2"><input type="text" name="rfbname" readonly="true" value= "<%=sessionName %>"></td>
           </tr>
           <tr id="subject">
             <td class="col1">제목</td>
-            <td class="col2"><input type="text"></td>
+            <td class="col2"><input type="text" name="rfbtitle"></td>
           </tr>
           <tr id="content">
             <td class="col1">내용</td>
-            <td class="col2"><textarea></textarea></td>
+            <td class="col2"><textarea name="rfbcontent"></textarea></td>
           </tr>
           <tr id="upload">
             <td class="col1">업로드 파일</td>
-            <td class="col2"><input type="file"></td>
+            <td class="col2"><input type="file" name="files"></td>
           </tr>
         </table>
         <div id="buttons">
-          <a href="board_list"><img src="${pageContext.request.contextPath}/resources/img/ok.png"></a>
+          <input type="image" src="${pageContext.request.contextPath}/resources/img/ok.png">
           <a href="board_list"><img src="${pageContext.request.contextPath}/resources/img/list.png"></a>
         </div>
+        </form>
       </section> <!-- section main 끝 -->
     </main>
     <div class="clear"></div>

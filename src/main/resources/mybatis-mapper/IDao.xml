@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="com.rubato.home.dao.IDao">
+
+	<!-- 맴버 관련 -->
+	<insert id="memberJoinDao">
+		INSERT INTO rubmember(mid, mpw, mname, memail) VALUES (#{param1},#{param2},#{param3},#{param4})
+	</insert> 
+	<select id="checkUserIdDao" resultType="int">
+		SELECT COUNT(*) FROM rubmember WHERE mid=#{param1} 
+	</select>
+	<select id="checkUserIdAndPwDao" resultType="int">
+		SELECT COUNT(*) FROM rubmember WHERE mid=#{param1} and mpw=#{param2}
+	</select>
+	
+	<!-- 게시판 관련 -->
+	<insert id="rfbWriteDao">
+		INSERT INTO rubafreeboard (rfbnum, rfbname, rfbtitle, rfbcontent,rfbid, rfbhit,rfbreplycount) 
+		VALUES (rfb_seq.nextval,#{param1},#{param2},#{param3},#{param4},0,0)
+	</insert>
+	<select id="rfbNameDao" resultType="com.rubato.home.dto.RMemberDto">
+		SELECT * FROM rubmember where mid=#{param1}
+	</select>
+	<select id="rfbListDao" resultType="com.rubato.home.dto.RFBoardDto">
+		SELECT * FROM rubafreeboard order by rfbnum DESC
+	</select>
+	<select id="rfbViewDao" resultType="com.rubato.home.dto.RFBoardDto">
+		SELECT * FROM rubafreeboard WHERE rfbnum=#{param1}
+	</select>
+	<select id="rfboardAllCountDao" resultType="int">
+		SELECT COUNT(*) FROM rubafreeboard 
+	</select>
+	<delete id="deleteDao">
+		DELETE FROM rubafreeboard WHERE rfbnum=#{param1}
+	</delete>
+	<update id="hitDao">
+		UPDATE rubafreeboard SET rfbhit= rfbhit+1 WHERE rfbnum=#{param1}
+	</update>
+	<update id="modifyDao">
+		UPDATE rubafreeboard SET rfbtitle=#{param1}, rfbcontent=#{param2} WHERE rfbnum=#{param3}
+	</update>
+	
+	
+	<!-- 댓글관련 -->
+	<insert id="rrWriteDao">
+		INSERT INTO rubareply (rrnum, rrorinum, rrid, rrcontent) 
+		VALUES (rr_seq.nextval,#{param1},#{param2},#{param3})
+	</insert>
+	
+	<select id="rrListDao" resultType="com.rubato.home.dto.RReplyDto">
+		SELECT * FROM rubareply WHERE rrorinum=#{param1}
+	</select>
+	
+	
+</mapper>

@@ -3,6 +3,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<% 
+		String sessionId = (String)session.getAttribute("memberId");
+		//로그인 중이라면 로그인한 아이디가 저장되고 비로그인 중이면 sessionId==null 임
+	%>
+
+
     <meta charset="UTF-8">
     <title>클래식기타 커뮤니티</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/common.css">
@@ -15,7 +21,19 @@
     <header> <!-- header 시작 -->
       <a href="index"><img id="logo" src="${pageContext.request.contextPath}/resources/img/logo.png"></a>
       <nav id="top_menu">
-        HOME | LOGIN | JOIN | NOTICE
+        HOME | 
+        <% if(sessionId == null) {
+        %>
+        LOGIN 
+        <% 
+        }else {
+        %>
+        <a href="logOut">LOGOUT</a> 
+        <% 
+        }
+        %>
+        
+        | <a href ="member_join">JOIN</a> | NOTICE
       </nav>
       <nav id="main_menu">
         <ul>
@@ -30,18 +48,36 @@
     <aside>
       <article id="login_box"> <!-- login box 시작 -->
         <img id="login_title" src="${pageContext.request.contextPath}/resources/img/ttl_login.png">
+        
+        <% if(sessionId == null){
+        %>
+         <form action="loginOk">
         <div id="input_button">
           <ul id="login_input">
-            <li><input type="text"></li>
-            <li><input type="password"></li>
+            <li><input type="text" name="mid"></li>
+            <li><input type="password" name="mpw"></li>
           </ul>
-          <img id="login_btn" src="${pageContext.request.contextPath}/resources/img/btn_login.gif">
+          <input type="image" id="login_btn" src="${pageContext.request.contextPath}/resources/img/btn_login.gif">
         </div>
+        </form>
+        <%
+        } else {
+       %>
+       <br><br><h2 align="center"><%= sessionId  %> 님 왜왔어여?</h2><br>
+		      
+       <% 
+        }
+       %>
+       
         <div class="clear"></div>
+         <% if(sessionId == null){ %>
         <div id="join_search">
-          <img src="${pageContext.request.contextPath}/resources/img/btn_join.gif">
+          <a href="member_join"><img src="${pageContext.request.contextPath}/resources/img/btn_join.gif"></a>
           <img src="${pageContext.request.contextPath}/resources/img/btn_search.gif">
         </div>
+        <% }else{ %>
+        <a href="logOut"><h3 align="right">로그아웃</h3></a>
+        <%} %>
       </article> <!-- login box 끝 -->
       <article id="guestbook"> <!-- guestbook 시작 -->
         <div id="guestbook_title">

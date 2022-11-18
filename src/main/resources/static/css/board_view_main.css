@@ -8,20 +8,26 @@ section#main #view_title_box {
     background-color:#eeeeee;
     padding:10px;
     margin-top:10px;
+   
+    
 }
 
 section#main #view_title_box #info {
-    margin-left:250px;
+    font-size:15px;
+    float:right;
+    font-weight: bold;
 }
 
 section#main #view_title_box #boardTitle {
-    font-size:13px;
+    font-size:17px;
     color:green;
+    font-weight: bold;
 }
 
 section#main #view_content {
     line-height:150%;
     padding:10px;
+    font-size:13px;
 }
 
 section#main #comment_box {

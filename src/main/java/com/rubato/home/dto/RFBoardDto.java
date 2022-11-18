@@ -14,8 +14,9 @@ public class RFBoardDto {
 	private String rfbtitle;
 	private String rfbcontent;
 	private int rfbhit;
-	private String rfbuserid;
+	private String rfbid;
 	private int rfbreplycount;
+	private String rfbdate;
 	
 	
 	
