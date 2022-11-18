@@ -54,6 +54,20 @@
 	<select id="rrListDao" resultType="com.rubato.home.dto.RReplyDto">
 		SELECT * FROM rubareply WHERE rrorinum=#{param1}
 	</select>
+	<update id="rrCountDao">
+		UPDATE rubafreeboard SET rfbreplycount= rfbreplycount+1 WHERE rfbnum=#{param1}
+	</update>
+	<delete id="rrDeleteDao">
+		DELETE FROM rubareply WHERE rrnum = #{param1}
+	</delete>
+	<update id="rrBBDao">
+		UPDATE rubafreeboard SET rfbreplycount= rfbreplycount-1 WHERE rfbnum=#{param1}
+	</update>
 	
+	<!-- 게시판 검색관련 -->
+	
+	<select id="rfbSearchTitleList" resultType="com.rubato.home.dto.RFBoardDto">
+		SELECT * FROM rubafreeboard WHERE rfbtitle= LIKE'%' || #{param1} ||	'%' ORDER BY rfbnum DESC
+	</select>
 	
 </mapper>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -136,26 +137,15 @@
             <div class="latest_content">
               <img class="image" src="${pageContext.request.contextPath}/resources/img/book_pen.gif">
               <ul class="list">
+               <c:forEach items="${dtos }" var="con"> 
                 <li>
-                  <div class="subject">까스통님의 선물인 보드카...</div>
-                  <div class="date">2022-09-30</div>
+                
+                  <div class="subject">${con.rfbtitle }</div>
+                
+                  <div class="date">${con.rfbdate.substring(0,10) }</div>
                   <div class="clear"></div>
                 </li>
-                <li>
-                  <div class="subject">까스통님의 선물인 보드카...</div>
-                  <div class="date">2022-09-30</div>
-                  <div class="clear"></div>
-                </li>
-                <li>
-                  <div class="subject">까스통님의 선물인 보드카...</div>
-                  <div class="date">2022-09-30</div>
-                  <div class="clear"></div>
-                </li>
-                <li>
-                  <div class="subject">까스통님의 선물인 보드카...</div>
-                  <div class="date">2022-09-30</div>
-                  <div class="clear"></div>
-                </li>
+                </c:forEach>
               </ul>
             </div>
           </article> <!-- 자유게시판 끝 -->

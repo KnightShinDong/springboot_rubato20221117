@@ -3,12 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<% 
-		String sessionId = (String)session.getAttribute("memberId");
-		String sessionName= (String)session.getAttribute("memberName");
-		//로그인 중이라면 로그인한 아이디가 저장되고 비로그인 중이면 sessionId==null 임
-		//세션 아이디 가져오기
-	%>
+	
     <meta charset="UTF-8">
     <title>클래식기타 커뮤니티</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/common.css">
@@ -19,6 +14,12 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/board_write_main.css">
 </head>
 <body>
+	<% 
+		String sessionId = (String)session.getAttribute("memberId");
+		String sessionName= (String)session.getAttribute("memberName");
+		//로그인 중이라면 로그인한 아이디가 저장되고 비로그인 중이면 sessionId==null 임
+		//세션 아이디 가져오기
+	%>
   <div id="wrap">
     <header> <!-- header 시작 -->
       <a href="index"><img id="logo" src="${pageContext.request.contextPath}/resources/img/logo.png"></a>

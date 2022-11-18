@@ -27,7 +27,16 @@ public class rubatoController {
 	private SqlSession sqlSession;
 	
 	@RequestMapping(value = "index")
-	public String index() {
+	public String index(Model model) {
+		
+		IDao dao = sqlSession.getMapper(IDao.class);
+		
+		ArrayList<RFBoardDto> dtos = dao.rfbListDao();
+		int boardCount = dao.rfboardAllCountDao();
+		model.addAttribute("dtos", dtos);
+		model.addAttribute("count", boardCount);
+		
+		
 		
 		return "index";
 	}
@@ -37,7 +46,9 @@ public class rubatoController {
 	@RequestMapping(value = "board_write")
 	public String board_write(HttpSession session, HttpServletResponse response) {
 		
-		String sessionId = (String)session.getAttribute("sessionId");
+		String sessionId = (String)session.getAttribute("memberId");
+		
+		
 		if(sessionId == null) {//참이면 로그인이 안된 상태
 			PrintWriter out;
 			try {
@@ -187,6 +198,9 @@ public class rubatoController {
 				
 				IDao dao = sqlSession.getMapper(IDao.class);
 				dao.rrWriteDao(rrorinum, sessionId, rrcontent); //댓글쓰기
+				
+				dao.rrCountDao(rrorinum);//해당글의 총개수 증가 
+				
 				RFBoardDto dto = dao.rfbViewDao(rrorinum);
 				ArrayList<RReplyDto> rdto = dao.rrListDao(rrorinum);
 				
@@ -223,6 +237,29 @@ public class rubatoController {
 		return "modifyView";
 	}
 	
+	@RequestMapping(value = "rrdelete")
+	public String rrdelete(HttpServletRequest request,Model model) {
+		IDao dao = sqlSession.getMapper(IDao.class);
+		String rrnum = request.getParameter("rrnum");
+		String rrorinum = request.getParameter("rrorinum");
+		
+		dao.rrDeleteDao(rrnum);
+		dao.rrBBDao(rrorinum);
+		
+		RFBoardDto dto = dao.rfbViewDao(rrorinum);
+		ArrayList<RReplyDto> rdto = dao.rrListDao(rrorinum);
+		model.addAttribute("rrlist",rdto);
+		model.addAttribute("view", dto);
+		
+		
+		
+		return "board_view";
+	}
 	
+	@RequestMapping(value = "search_list")
+	public String search_list() {
+		
+		return "board_list";
+	}
 	
 }

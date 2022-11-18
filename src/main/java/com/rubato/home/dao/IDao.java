@@ -25,6 +25,16 @@ public interface IDao {
 	//댓글 관련
 	public void rrWriteDao(String rrorinum, String rrid, String rrcontent);//새댓글입력
 	public ArrayList<RReplyDto> rrListDao(String rrorinum);
+	//댓글 등록시 해당글의 댓글갯수 1증가
+	public void rrCountDao(String rrcountnum);
+	public void rrDeleteDao(String rrnum);
+	public void rrBBDao(String rrcountnum);
+	
+	//게시판 검색 관련
+	public ArrayList<RFBoardDto> rfbSearchTitleList(String searchKey);
+	public ArrayList<RFBoardDto> rfbSearchContentList(String searchKey);
+	public ArrayList<RFBoardDto> rfbSearchWriterList(String searchKey);
+	
 	
 
 }

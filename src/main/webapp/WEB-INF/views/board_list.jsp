@@ -107,16 +107,18 @@
           <div id="total">▷ 총 ${count }개의 게시물이 있습니다.</div>
           <div id="search">
             <div id="select_img"><img src="${pageContext.request.contextPath}/resources/img/select_search.gif"></div>
-            <div id="search_select">
-              <select>
-                <option>제목</option>
-                <option>내용</option>
-                <option>글쓴이</option>
-              </select>
-            </div>
-            <div id="search_input"><input type="text"></div>
-            <div id="search_btn"><img src="${pageContext.request.contextPath}/resources/img/search_button.gif"></div>
-          </div>
+            <form action="search_list">
+	            <div id="search_select">
+	              <select name="searchOption">
+	                <option value="title">제목</option>
+	                <option value="content">내용</option>
+	                <option value="writer">글쓴이</option>
+	              </select>
+	            </div>
+	            <div id="search_input"><input type="text" name="searchKey"></div>
+	            <div id="search_btn"><input type="image" src="${pageContext.request.contextPath}/resources/img/search_button.gif"></div>
+	          </div>
+        	</form>
         </div> <!-- total search 끝 -->
         <table>
           <tr>
@@ -131,7 +133,9 @@
             <td class="col1">${li.rfbnum }</td>
             <td class="col2">
               <a href="board_view?rfbnum=${li.rfbnum}" >${li.rfbtitle }</a>
-              
+              <c:if test="${li.rfbreplycount != 0}">
+              &nbsp;&nbsp;[${li.rfbreplycount}]
+              </c:if>
             </td>
             <td class="col3">${li.rfbid }</td>
             <td class="col4">${li.rfbdate }</td>

@@ -125,7 +125,8 @@
         			${rdto.rrdate }
         		</td>
         		<td>
-        			<a href ="replyDelete?rrnum=${rdto.rrnum} }">삭제</a>
+        			<a href ="rrdelete?rrnum=${rdto.rrnum}&rrorinum=${rdto.rrorinum}">삭제</a>
+        			
         		</td>
         	</tr>
         	</c:forEach>
