@@ -257,7 +257,29 @@ public class rubatoController {
 	}
 	
 	@RequestMapping(value = "search_list")
-	public String search_list() {
+	public String search_list(HttpServletRequest request, Model model) {
+		IDao dao = sqlSession.getMapper(IDao.class);
+		String sOption = request.getParameter("searchOption");
+		// title, content, writer 3개중 한개값
+		String sKey = request.getParameter("searchKey");
+		//제목,내용,글쓴이 에 포함된 검색 키워드 낱말
+		
+		ArrayList<RFBoardDto> dtos = null;
+		
+		if(sOption.equals("title") ) {
+			dtos = dao.rfbSearchTitleListDao(sKey);
+		} else if(sOption.equals("content") ){
+			dtos = dao.rfbSearchContentListDao(sKey);
+		} else if (sOption.equals("writer") ){
+			dtos = dao.rfbSearchWriterListDao(sKey);
+		}
+		
+		model.addAttribute("dtos", dtos);
+		
+		model.addAttribute("Count", dtos.size());
+		//검색 결과 게시물의 개수 반환
+	
+		
 		
 		return "board_list";
 	}

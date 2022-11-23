@@ -31,9 +31,9 @@ public interface IDao {
 	public void rrBBDao(String rrcountnum);
 	
 	//게시판 검색 관련
-	public ArrayList<RFBoardDto> rfbSearchTitleList(String searchKey);
-	public ArrayList<RFBoardDto> rfbSearchContentList(String searchKey);
-	public ArrayList<RFBoardDto> rfbSearchWriterList(String searchKey);
+	public ArrayList<RFBoardDto> rfbSearchTitleListDao(String searchKey);
+	public ArrayList<RFBoardDto> rfbSearchContentListDao(String searchKey);
+	public ArrayList<RFBoardDto> rfbSearchWriterListDao(String searchKey);
 	
 	
 
