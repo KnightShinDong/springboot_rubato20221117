@@ -136,6 +136,12 @@
               <c:if test="${li.rfbreplycount != 0}">
               &nbsp;&nbsp;[${li.rfbreplycount}]
               </c:if>
+              <c:if test="${li.fileCount != 0}">
+              <a href="file_down?rfbnum=${li.rfbnum}">
+              &nbsp;<img width="25" src="${pageContext.request.contextPath}/resources/img/file.png">
+              </a>
+              </c:if>
+              
             </td>
             <td class="col3">${li.rfbid }</td>
             <td class="col4">${li.rfbdate }</td>

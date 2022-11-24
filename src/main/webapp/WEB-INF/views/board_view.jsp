@@ -108,11 +108,25 @@
           <span id="info">${view.rfbname } | 조회수 : ${view.rfbhit } | ${view.rfbdate }</span>
         </div>
         <p id="view_content">
-          ${view.rfbcontent }
+          ${view.rfbcontent } 
         </p>
+       
         <form action="replyOk">
         <input type="hidden" name="rfbnum" value="${view.rfbnum}"> 
         
+        <p id="file_info">
+        	※ 첨부파일 : 
+        	<a href="${pageContext.request.contextPath}/resources/uploadfiles/${fileDto.fileName }" download>
+        	${fileDto.fileOriName} 
+        	</a>
+        </p>
+       	<c:if test="${fileDto.fileExtension=='jpg' or fileDto.fileExtension=='png' or fileDto.fileExtension=='bmp' or fileDto.fileExtension=='gif'}">
+       	 	<br>
+       	 	<img width="300" src="${pageContext.request.contextPath}/resources/uploadfiles/${fileDto.fileName }">
+ 			<br>      	
+       	</c:if>
+       	
+       	         
         <!-- 해당글의 댓글 리스트 출력  -->
         <table border="1" cellpadding="0" cellspacing="0" width="750">
         	<c:forEach items="${rrlist }" var="rdto">

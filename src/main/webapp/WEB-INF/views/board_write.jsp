@@ -104,7 +104,8 @@
         <img src="${pageContext.request.contextPath}/resources/img/comm.gif">
         <h2 id="board_title">자유게시판</h2>
         <div id="write_title"><h2>글쓰기</h2></div>
-        <form action="writeOk">
+        <form action="writeOk" method="post" enctype="multipart/form-data">
+        						<!-- 파일보낼때 포스트로 정하고 enctype추가 -->
         <input type="hidden" name="rfbid" value="<%=sessionId%>">
         <table>
           <tr id="name">

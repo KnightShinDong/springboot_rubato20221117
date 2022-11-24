@@ -2,6 +2,7 @@ package com.rubato.home.dao;
 
 import java.util.ArrayList;
 
+import com.rubato.home.dto.FileDto;
 import com.rubato.home.dto.RFBoardDto;
 import com.rubato.home.dto.RMemberDto;
 import com.rubato.home.dto.RReplyDto;
@@ -13,7 +14,7 @@ public interface IDao {
 	public int checkUserIdAndPwDao(String mid, String mpw);
 	
 	//게시판 관련
-	public void rfbWriteDao(String rfbname, String rfbtitle, String rfbcontent,String rfbid);
+	public void rfbWriteDao(String rfbname, String rfbtitle, String rfbcontent,String rfbid,int fileCount);
 	public RMemberDto rfbNameDao(String mid);
 	public ArrayList<RFBoardDto> rfbListDao();
 	public RFBoardDto rfbViewDao(String rfbnum);
@@ -35,6 +36,10 @@ public interface IDao {
 	public ArrayList<RFBoardDto> rfbSearchContentListDao(String searchKey);
 	public ArrayList<RFBoardDto> rfbSearchWriterListDao(String searchKey);
 	
+	//파일업로드 관련
+	public void fileInfoInsertDao(int boardNum, String fileOriName, String fileName, String fileExtension, String fileUrl );
+	public ArrayList<RFBoardDto> boardLatestInfoDao(String rfbId);
+	//현재 파일이 첨부된 글을 쓴아이디로 검색된 글 목록
+	public FileDto getFileInfoDao(String rfbnum);
 	
-
 }

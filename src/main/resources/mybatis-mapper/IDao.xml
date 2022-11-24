@@ -19,8 +19,8 @@
 	
 	<!-- 게시판 관련 -->
 	<insert id="rfbWriteDao">
-		INSERT INTO rubafreeboard (rfbnum, rfbname, rfbtitle, rfbcontent,rfbid, rfbhit,rfbreplycount) 
-		VALUES (rfb_seq.nextval,#{param1},#{param2},#{param3},#{param4},0,0)
+		INSERT INTO rubafreeboard (rfbnum, rfbname, rfbtitle, rfbcontent,rfbid, rfbhit,rfbreplycount, fileCount) 
+		VALUES (rfb_seq.nextval,#{param1},#{param2},#{param3},#{param4},0,0,#{param5})
 	</insert>
 	<select id="rfbNameDao" resultType="com.rubato.home.dto.RMemberDto">
 		SELECT * FROM rubmember where mid=#{param1}
@@ -76,4 +76,31 @@
 		SELECT * FROM rubafreeboard WHERE rfbname LIKE '%' || #{param1} || '%' ORDER BY rfbnum DESC
 	</select>
 	
+	
+	<!--  파일 업로드 관련 -->
+	<insert id="fileInfoInsertDao">
+		INSERT INTO rubafiles (fileNum,boardNum, fileOriName, fileName,  fileExtension, fileUrl) 
+		VALUES (file_seq.nextval,#{param1},#{param2},#{param3},#{param4},#{param5})
+	</insert>
+	
+	<select id="boardLatestInfoDao" resultType="com.rubato.home.dto.RFBoardDto">
+		SELECT * FROM rubafreeboard WHERE rfbid = #{param1} ORDER BY rfbnum DESC
+	</select>
+	
+	<select id="getFileInfoDao" resultType="com.rubato.home.dto.FileDto">
+		SELECT * FROM rubafiles WHERE boardnum = #{param1} 
+	</select>
+	
+	
+	
+
+	
 </mapper>
+
+
+
+
+
+
+
+

@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<!--   -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -131,17 +135,30 @@
           <article id="freeBoard"> <!-- 자유게시판 -->
             <div class="latest_title">
               <img class="latest_img" src="${pageContext.request.contextPath}/resources/img/latest2.gif">
-              <img class="more" src="${pageContext.request.contextPath}/resources/img/more.gif">
+              <a href = "board_list"><img class="more" src="${pageContext.request.contextPath}/resources/img/more.gif"> </a>
+              
               <div class="clear"></div>
             </div>
             <div class="latest_content">
               <img class="image" src="${pageContext.request.contextPath}/resources/img/book_pen.gif">
               <ul class="list">
-               <c:forEach items="${dtos }" var="con"> 
+               <c:forEach items="${dtos }" var="con" begin="0" end="3"> 
                 <li>
+                <a href="board_view?rfbnum=${con.rfbnum}">
+                 <div class="subject">
+                  <c:choose>
+                  <c:when test="${fn:length(con.rfbtitle) >= 15}">
+                  
+                  	<c:out value="${fn:substring(con.rfbtitle,0,14)}"></c:out>...
                 
-                  <div class="subject">${con.rfbtitle }</div>
-                
+                  </c:when>
+                  <c:otherwise>
+                  <div class="subject">
+                  	${con.rfbtitle}
+                  </div>
+                  </c:otherwise>
+                	</c:choose>
+                	  </div></a>
                   <div class="date">${con.rfbdate.substring(0,10) }</div>
                   <div class="clear"></div>
                 </li>
