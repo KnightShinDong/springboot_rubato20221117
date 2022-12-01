@@ -148,9 +148,32 @@
             <td class="col5">${li.rfbhit }</td>
           </tr>
           </c:forEach>
+         
         </table> <!-- 게시판 목록 테이블 끝 -->
         <div id="buttons">
-          <div class="col1">◀ 이전 1 다음 ▶</div>
+          <div class="col1">
+           <tr>
+									<td colspan="5" align="center">
+										<c:if test="${pageMaker.prev}">
+											<a href="board_list?pageNum=${pageMaker.startPage-5 }">Prev</a> &nbsp;&nbsp;&nbsp;
+										</c:if>
+										<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
+											<c:choose>
+											<c:when test="${currPage == num}">
+												<u>${num }</u> &nbsp;&nbsp;&nbsp; 
+											</c:when>
+											<c:otherwise>
+												<a href="board_list?pageNum=${num }">${num }</a> &nbsp;&nbsp;&nbsp;
+											</c:otherwise>
+											</c:choose>
+										</c:forEach>
+										<c:if test="${pageMaker.next}">
+											<a href="board_list?pageNum=${pageMaker.startPage+5 }">Next</a> 
+										</c:if>
+									</td>
+								</tr>
+          
+          </div>
           <div class="col2">
             <a href="board_list"><img src="${pageContext.request.contextPath}/resources/img/list.png"></a>
             <a href="board_write"><img src="${pageContext.request.contextPath}/resources/img/write.png"></a>

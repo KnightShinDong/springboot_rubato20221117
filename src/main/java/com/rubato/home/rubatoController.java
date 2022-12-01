@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.connector.Response;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.ibatis.session.SqlSession;
@@ -19,10 +18,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.support.MultipartFilter;
 
 import com.rubato.home.dao.IDao;
+import com.rubato.home.dto.Criteria;
 import com.rubato.home.dto.FileDto;
+import com.rubato.home.dto.PageDto;
 import com.rubato.home.dto.RFBoardDto;
 import com.rubato.home.dto.RMemberDto;
 import com.rubato.home.dto.RReplyDto;
@@ -40,11 +40,11 @@ public class rubatoController {
 	}
 	
 	@RequestMapping(value = "index")
-	public String index(Model model) {
+	public String index(Model model, Criteria cri) {
 		
 		IDao dao = sqlSession.getMapper(IDao.class);
 		
-		ArrayList<RFBoardDto> dtos = dao.rfbListDao();
+		ArrayList<RFBoardDto> dtos = dao.rfbListDao(cri);
 		int boardCount = dao.rfboardAllCountDao();
 		
 		//List<RFBoardDto> dtos = dao.rfbListDao();
@@ -195,12 +195,33 @@ public class rubatoController {
 	}
 	
 	@RequestMapping(value = "board_list")
-	public String board_list(Model model) {
+	public String board_list(HttpServletRequest request, Model model, Criteria cri) {
+		
+		
+		int pageNumInt= 0;
+		if(request.getParameter("pageNum") == null) {
+			pageNumInt = 1;
+			cri.setPageNum(pageNumInt);
+			
+		} else {
+			pageNumInt = Integer.parseInt(request.getParameter("pageNum"));
+		//처음 넘어온 값이 null값이라  if문사용
+			cri.setPageNum(pageNumInt);
+		}
+		
+		
 		
 		IDao dao = sqlSession.getMapper(IDao.class);
-		
-		ArrayList<RFBoardDto> dtos = dao.rfbListDao();
+		int totalRecord = dao.boardAllCount(); 
+		ArrayList<RFBoardDto> dtos = dao.rfbListDao(cri);
 		int boardCount = dao.rfboardAllCountDao();
+		
+		cri.setStartNum(cri.getPageNum()-1 * cri.getAmount());
+		
+		PageDto pageDto = new PageDto(cri, totalRecord);
+		
+		model.addAttribute("pageMaker", pageDto);//페이징관련
+		model.addAttribute("currPage", pageNumInt);
 		model.addAttribute("dtos", dtos);
 		model.addAttribute("count", boardCount);
 		

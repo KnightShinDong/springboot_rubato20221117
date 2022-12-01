@@ -26,7 +26,11 @@
 		SELECT * FROM rubmember where mid=#{param1}
 	</select>
 	<select id="rfbListDao" resultType="com.rubato.home.dto.RFBoardDto">
-		SELECT * FROM rubafreeboard order by rfbnum DESC
+		SELECT * FROM
+			(SELECT A.*,Floor((ROWNUM-1)/#{amount}+1)PAGE,ROWNUM
+			FROM
+			(SELECT * FROM rubafreeboard ORDER BY rfbnum DESC)A)
+		WHERE PAGE = #{pageNum} 
 	</select>
 	<select id="rfbViewDao" resultType="com.rubato.home.dto.RFBoardDto">
 		SELECT * FROM rubafreeboard WHERE rfbnum=#{param1}
@@ -43,6 +47,9 @@
 	<update id="modifyDao">
 		UPDATE rubafreeboard SET rfbtitle=#{param1}, rfbcontent=#{param2} WHERE rfbnum=#{param3}
 	</update>
+	<select id="boardAllCount" resultType="int">
+		SELECT COUNT(*) FROM profile_board
+	</select>
 	
 	
 	<!-- 댓글관련 -->
